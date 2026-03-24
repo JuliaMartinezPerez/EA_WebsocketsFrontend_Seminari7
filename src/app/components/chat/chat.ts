@@ -28,6 +28,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   private stopTypingSub!: Subscription;
   private typingTimeout: any;
 
+  private usersSub!: Subscription;
+  public usuariosConectados: string[] = [];
+
   constructor(
     private chatService: Chat,
     private router: Router,
@@ -40,7 +43,13 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.usuarioActivoName = sessionStorage.getItem('chat_user_name') || '';
       this.organizacionActiva = sessionStorage.getItem('chat_org_id') || '';
       this.organizacionActivaName = sessionStorage.getItem('chat_org_name') || '';
+      this.chatService.connectUser(this.usuarioActivoName);
     }
+
+    this.usersSub = this.chatService.getUsuariosConectados().subscribe((users: string[]) => {
+      this.usuariosConectados = users;
+      this.cdr.detectChanges();
+    });
 
     if (!this.usuarioActivo || !this.organizacionActiva) {
       this.router.navigate(['/login']);
@@ -74,6 +83,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (this.messageSub) this.messageSub.unsubscribe();
     if (this.typingSub) this.typingSub.unsubscribe();
     if (this.stopTypingSub) this.stopTypingSub.unsubscribe();
+    if (this.usersSub) this.usersSub.unsubscribe();
     this.chatService.disconnect();
   }
 

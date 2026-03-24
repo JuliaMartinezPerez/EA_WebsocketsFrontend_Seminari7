@@ -1,3 +1,11 @@
+# Exercisi Seminari 
+
+S'ha utilitzat ChatGPT i Copilot per ajudar amb els errors.
+
+S'ha utilitzat el codi d'exemple per a la resta.
+
+No m'apareixen els chats en l'Angular i no entenc perquè. Ahir, quan vaig fer l'exercici, funcionava perfectament i fins i tot després de tornar a descarregar els repos i executar-los sense modificar el codi, no apareixien.
+
 # ChatApp
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.1.

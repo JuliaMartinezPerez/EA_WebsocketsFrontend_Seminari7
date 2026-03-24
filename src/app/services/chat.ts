@@ -33,6 +33,18 @@ export class Chat {
     });
   }
 
+  connectUser(nombre: string): void {
+    this.socket.emit('user-connected', nombre);
+  }
+
+  getUsuariosConectados(): Observable<string[]> {
+    return new Observable((observer) => {
+      this.socket.on('usuarios-conectados', (usuarios: string[]) => {
+        observer.next(usuarios);
+      });
+    });
+  }
+
   getHistory(): Observable<Mensaje[]> {
     return this.http.get<Mensaje[]>(`${this.SERVER_URL}/mensajes`);
   }
@@ -60,7 +72,7 @@ export class Chat {
     });
   }
 
-  onUserStopTyping(): Observable<any> {
+  onUserStopTyping(): Observable<any> { 
     return new Observable((observer) => {
       this.socket.on('user-stop-typing', (data) => {
         observer.next(data);
